@@ -38,11 +38,14 @@ class UsersController {
   }
   updateUser(req, res) {
     const id = req.params.id;
+
     const fileUsers = fs.readFileSync("./src/models/users.json", "utf8");
     const listUsers = JSON.parse(fileUsers);
     listUsers.forEach((item, index) => {
       if (item.id == id) {
-        listUsers.splice(index, 1, req.body);
+        const newUser = { ...item, ...req.body };
+        console.log(1111, newUser);
+        listUsers.splice(index, 1, newUser);
         return;
       }
     });
@@ -52,6 +55,13 @@ class UsersController {
       message: "Ok",
       data: listUsers,
     });
+  }
+  getPostByIdUser(req, res) {
+    const userId = req.params.userId;
+    const filePosts = fs.readFileSync("./src/models/posts.json", "utf8");
+    const listPosts = JSON.parse(filePosts);
+    const listPostsByUser = listPosts.filter((item) => item.userId == userId);
+    res.json(listPostsByUser);
   }
 }
 export default UsersController;

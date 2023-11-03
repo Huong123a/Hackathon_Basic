@@ -13,6 +13,7 @@ usersRouter.post("/", usersController.createUser);
 usersRouter.delete("/:id", usersController.deleteUser);
 // update user
 usersRouter.put("/:id", usersController.updateUser);
-
+// get posts by userId
+usersRouter.get("/:userId/posts", usersController.getPostByIdUser);
 
 export default usersRouter;
